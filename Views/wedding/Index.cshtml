@@ -1,0 +1,37 @@
+@model List<WeddingViewModel>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Wedding of</th>
+      <th scope="col">Date</th>
+      <th scope="col">Guest Count</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach(WeddingViewModel _we in @Model){
+      <tr>
+   <th scope="row"><a href="Weddings/@_we.WeddingId">@_we.WedderOne & @_we.WedderTwo</a> </th>
+      <td>@_we.WeddingDate</td>
+      <td>@_we.NumAsistentes</td>
+      @if(@_we.CreatorId == (int)@Context.Session.GetInt32("UUID")){
+        <td>
+        <form asp-action="Delete" asp-controller="Wedding" asp-route-WeddingId="@_we.WeddingId" method="post">
+          <button class="btn-danger">Delete</button>
+          </form>
+        </td>
+      }else if(@_we.ListaAsistentes.Any(w => w.UsuarioId == (int)@Context.Session.GetInt32("UUID"))){
+        <form asp-action="Unregister" asp-controller="Wedding" asp-route-WeddingId="@_we.WeddingId" method="post">
+        <td><button class="btn-primary">Unregister</button></td>
+         </form>
+      }else{
+          <form asp-action="Register" asp-controller="Wedding" asp-route-WeddingId="@_we.WeddingId" method="post">
+        <td><button class="btn-primary">Register</button></td>
+        </form>
+      }
+      
+    </tr>
+    }
+    
+  </tbody>
+</table>

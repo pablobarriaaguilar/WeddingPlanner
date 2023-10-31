@@ -1,0 +1,10 @@
+@model WeddingViewModel
+
+<h1> @Model.WedderOne & @Model.WedderTwo Wedding</h1>
+<h2>Date: @Model.WeddingDate</h2>
+<h2>Guests:@Model.NumAsistentes</h2>
+<h2>List of Guests:</h2>
+@foreach (var asistente in Model.ListaAsistentes)
+    {
+        <li>@asistente.Usuario.FirstName @asistente.Usuario.LastName</li>
+    }
